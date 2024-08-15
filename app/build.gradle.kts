@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
     id("androidx.navigation.safeargs")
+    id("io.realm.kotlin")
 }
 
 android {
@@ -44,6 +45,9 @@ dependencies {
     val nav_version = "2.7.7"
     val lifecycle_version = "2.8.4"
     val arch_version = "2.2.0"
+
+    //Realm
+    implementation("io.realm.kotlin:library-base:1.16.0")
 
     // ViewModel
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version")

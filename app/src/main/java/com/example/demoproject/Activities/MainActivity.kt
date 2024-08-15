@@ -1,11 +1,12 @@
-package com.example.demoproject
+package com.example.demoproject.Activities
 
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.example.demoproject.R
+import com.example.demoproject.Service.TodosService
 import com.example.demoproject.databinding.ActivityMainBinding
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -22,6 +23,11 @@ class MainActivity : AppCompatActivity() {
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
+        }
+
+        CoroutineScope(Dispatchers.IO).launch {
+            val todosService = TodosService()
+            todosService.fetchTodosFromApi("https://jsonplaceholder.typicode.com/todos/")
         }
     }
 }

@@ -1,6 +1,6 @@
-package com.example.demoproject
+package com.example.demoproject.Service
 
-import TodosItem
+import com.example.demoproject.Models.TodosItem
 import android.util.Log
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -10,10 +10,12 @@ import java.net.URL
 
 
 class TodosService {
-    suspend fun fetchTodosFromApi(urlString: String): List<TodosItem> {
+    suspend fun fetchTodosFromApi(urlString: String) {
         val items = mutableListOf<TodosItem>()
+        val databaseService = DatabaseService()
         withContext(Dispatchers.IO) {
             Log.i("MYTAG", "${Thread.currentThread().name}")
+//            databaseService.deleteAllItems()
             val url = URL(urlString)
             val connection = url.openConnection() as HttpURLConnection
 
@@ -32,13 +34,11 @@ class TodosService {
                     val id = jsonObject.getInt("id")
                     val title = jsonObject.getString("title")
                     val userId = jsonObject.getInt("userId")
-
-                    items.add(TodosItem(completed, id, title, userId))
+                    databaseService.saveItem(completed, id, userId, title)
                 }
             } finally {
                 connection.disconnect()
             }
         }
-        return items
     }
 }
