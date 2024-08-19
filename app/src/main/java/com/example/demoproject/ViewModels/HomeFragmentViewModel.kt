@@ -5,7 +5,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.demoproject.Service.DatabaseService
 import com.example.demoproject.Service.TodosService
-import com.example.demoproject.Utilities.MyApp.Companion.realm
 
 class HomeFragmentViewModel: ViewModel() {
     private var _todosList = MutableLiveData<List<TodosItem>?>()

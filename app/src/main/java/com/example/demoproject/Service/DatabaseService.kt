@@ -9,7 +9,7 @@ import io.realm.kotlin.query.RealmResults
 class DatabaseService {
 
     companion object {
-        private val realm = MyApp.realm
+        private val realm = RealmDatabase.realm
 
         fun saveItem(isCompleted: Boolean, id: Int, userId: Int, title: String) {
             realm.writeBlocking {

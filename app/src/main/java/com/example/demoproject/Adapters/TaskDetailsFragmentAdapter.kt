@@ -14,7 +14,6 @@ import io.realm.kotlin.query.RealmResults
 class TaskDetailsFragmentAdapter(var todosList: List<TodosItem>): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     override fun getItemViewType(position: Int): Int {
-
         if(todosList[position].completed) {
             return 0
         } else {
@@ -33,7 +32,6 @@ class TaskDetailsFragmentAdapter(var todosList: List<TodosItem>): RecyclerView.A
             val binding = IncompleteItemListBinding.inflate(LayoutInflater.from(parent.context), parent, false)
             return IncompletedTaskViewHolder(binding)
         }
-
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
