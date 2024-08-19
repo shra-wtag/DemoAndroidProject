@@ -24,10 +24,5 @@ class MainActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-
-        CoroutineScope(Dispatchers.IO).launch {
-            val todosService = TodosService()
-            todosService.fetchTodosFromApi("https://jsonplaceholder.typicode.com/todos/")
-        }
     }
 }

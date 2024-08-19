@@ -1,26 +1,32 @@
 package com.example.demoproject.ViewModels
 
 import com.example.demoproject.Models.TodosItem
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.example.demoproject.Service.DatabaseService
-import io.realm.kotlin.query.RealmResults
-import kotlinx.coroutines.launch
+import com.example.demoproject.Service.TodosService
+import com.example.demoproject.Utilities.MyApp.Companion.realm
 
 class HomeFragmentViewModel: ViewModel() {
-    private var _todosList = MutableLiveData<RealmResults<TodosItem>>()
-    val todosList: LiveData<RealmResults<TodosItem>> get() = _todosList
+    private var _todosList = MutableLiveData<List<TodosItem>?>()
+    val todosList: MutableLiveData<List<TodosItem>?> get() = _todosList
 
-    init {
-        getData()
+    fun fetchTodosData() {
+        TodosService.fetchTodosFromApi("https://jsonplaceholder.typicode.com/todos/") { todosItems ->
+            _todosList.postValue(todosItems)
+            if (todosItems != null) {
+                storeTodosInDatabase(todosItems)
+            }
+        }
+    }
+
+    fun storeTodosInDatabase(todolist: List<TodosItem>) {
+        todolist.forEach { todoItem ->
+            DatabaseService.saveItem(todoItem.completed, todoItem.id, todoItem.userId, todoItem.title)
+        }
     }
 
     fun getData() {
-        viewModelScope.launch {
-            val databaseService = DatabaseService()
-            _todosList.postValue(databaseService.readData())
-        }
+        _todosList.postValue(DatabaseService.readData())
     }
 }

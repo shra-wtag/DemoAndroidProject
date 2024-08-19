@@ -17,6 +17,5 @@ class MyApp: Application() {
             schema = setOf(TodosItem::class)
         )
         realm = Realm.open(config)
-
     }
 }

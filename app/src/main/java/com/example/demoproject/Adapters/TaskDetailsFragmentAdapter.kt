@@ -11,7 +11,7 @@ import com.example.demoproject.databinding.IncompleteItemListBinding
 import com.example.demoproject.databinding.ItemListBinding
 import io.realm.kotlin.query.RealmResults
 
-class HomeFragmentAdapter(val todosList: RealmResults<TodosItem>): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class TaskDetailsFragmentAdapter(var todosList: List<TodosItem>): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     override fun getItemViewType(position: Int): Int {
 
@@ -74,5 +74,10 @@ class HomeFragmentAdapter(val todosList: RealmResults<TodosItem>): RecyclerView.
                 it.findNavController().navigate(R.id.action_homeFragment_to_taskDetailsFragment,bundle)
             }
         }
+    }
+
+    fun updateTodos(_todosList: List<TodosItem>) {
+        todosList = _todosList
+        notifyDataSetChanged()
     }
 }
